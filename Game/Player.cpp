@@ -216,7 +216,8 @@ void Player::PlayAnimation()
 	case 3:
 		//modelRender.Init("Assets/modelData/unityChan.tkm", animationClips, enAnimationClip_Num, enModelUpAxisY);
 		
-		rotation.AddRotationX(-90.0f);
+		rotation.AddRotationX(-89.4f);
+	
 		//rotation.AddRotationY(90.0f);
 	
 		modelRender.SetRotation(rotation);
