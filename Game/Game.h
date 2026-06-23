@@ -1,7 +1,8 @@
 #pragma once
 #include "sound/SoundSource.h"
 //#include "Level3DRender/LevelRender.h"
-
+//前方宣言･･･こういうクラスがあることだけ伝える→実行までの時間短縮
+// includeはクラス～内容全部伝える(コピー)
 class Player;
 class GameCamera;
 class BackGround;

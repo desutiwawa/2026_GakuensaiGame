@@ -18,6 +18,7 @@ Player::Player()
 
 	characterController.Init(25.0f, 75.0f, position);
 
+	
 }
 
 Player::~Player()
@@ -37,35 +38,70 @@ void Player::Update()
 	PlayAnimation();
 	//更新処理(絵描き)
 	modelRender.Update();
+
+
 }
 
 
 
 void Player::Move()
 {
-	moveSpeed.x = 0.0f;
-	moveSpeed.z = 0.0f;
-	//スティックの角度所得
-	Vector3 stickL;
-	stickL.x = g_pad[0]->GetLStickXF();
-	stickL.y = g_pad[0]->GetLStickYF();
-
-	Vector3 forward = g_camera3D->GetForward();
-	Vector3 right = g_camera3D->GetRight();
-
-	forward.y = 0.0f;
-	right.y = 0.0f;
-	//スティックの角度に240.0f乗算
-	right *= stickL.x * 240.0f;
-	forward *= stickL.y * 240.0f;
-	//移動速度にスティックの角度を加算
-	moveSpeed += right + forward;
-
-	if (g_pad[0]->IsTrigger(enButtonB))
+	if (isDashing == false)
 	{
-		moveSpeed.x *= 200.0f;
-		moveSpeed.z *= 200.0f;
+		moveSpeed.x = 0.0f;
+		moveSpeed.z = 0.0f;
+		//スティックの角度所得
+		Vector3 stickL;
+		stickL.x = g_pad[0]->GetLStickXF();
+		stickL.y = g_pad[0]->GetLStickYF();
+
+		Vector3 forward = g_camera3D->GetForward();
+		Vector3 right = g_camera3D->GetRight();
+
+		forward.y = 0.0f;
+		right.y = 0.0f;
+		//スティックの角度に240.0f乗算
+		right *= stickL.x * 240.0f;
+		forward *= stickL.y * 240.0f;
+		//移動速度にスティックの角度を加算
+		moveSpeed += right + forward;
 	}
+
+
+
+	//ダッシュ・スライディングの作成
+	if (fabsf(moveSpeed.x) >= 0.001f || fabsf(moveSpeed.z) >= 0.001f)
+	{
+		if (g_pad[0]->IsTrigger(enButtonB) && isDashing == false)
+		{
+			//フラグをtrue
+			//DSmoveSpeed = moveSpeed;
+			isDashing = true;
+
+		}
+		if (isDashing)
+		{
+
+			DashSpeed += A_Dash;
+			//DashSpeedの最大値を固定。
+			DashSpeed = min(DashSpeed, MAX_Dash);
+
+			//DSmoveSpeedをDashSpeed倍にする
+			moveSpeed.x *= DashSpeed;
+			moveSpeed.z *= DashSpeed;
+
+
+			//Dashフラグをfalse & DashSpeedのリセット
+			if (DashSpeed >= MAX_Dash)
+			{
+				isDashing = false;
+				DashSpeed = 1.0f;
+			}
+		}
+	}
+
+
+	
 
 	//落下したときに位置リセット
 	if (position.y <= -750.0f)
@@ -113,6 +149,7 @@ void Player::Move()
 
 	//絵描きさんに座標を教える。
 	modelRender.SetPosition(position);
+	modelRender.SetRotation(rotation);
 
 }
 
@@ -146,7 +183,7 @@ void Player::ManageState()
 		playerState = 0;
 	}
 	//ブリンク
-	else if (g_pad[0]->IsPress(enButtonB))
+	else if (isDashing == true)
 	{
 		playerState = 3;
 	}
@@ -177,7 +214,13 @@ void Player::PlayAnimation()
 		break;
 		//ダッシュアニメーション
 	case 3:
-		modelRender.PlayAnimation(enAnimationClip_Run);
+		//modelRender.Init("Assets/modelData/unityChan.tkm", animationClips, enAnimationClip_Num, enModelUpAxisY);
+		
+		rotation.AddRotationX(-90.0f);
+		//rotation.AddRotationY(90.0f);
+	
+		modelRender.SetRotation(rotation);
+		//modelRender.PlayAnimation(enAnimationClip_Run);
 		break;
 	}
 }
