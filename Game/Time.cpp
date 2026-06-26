@@ -25,11 +25,14 @@ void Time::Update()
 	swprintf(timeText, 32, L"TIME : %.0f", LimitTime);
 	fontRender.SetText(timeText);
 	
-	
-
 }
 
 void Time::Render(RenderContext& rc)
 {
 	fontRender.Draw(rc);
 }
+
+//float Time::GetLimitTime() const
+//{
+//	return LimitTime;
+//}

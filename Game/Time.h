@@ -11,6 +11,6 @@ public:
 	Vector3 position;
 	float LimitTime = 60.0f;
 
-	
+	//float GetLimitTime() const;
 };
 

@@ -46,7 +46,7 @@ Game::Game()
 
 	//UI
 	//Time
-	Time* time = NewGO<Time>(0, "time");
+	time = NewGO<Time>(0, "time");
 
 
 
@@ -62,6 +62,8 @@ Game::~Game()
 	DeleteGO(gameBGM);
 	//背景削除
 	DeleteGO(backGround);
+
+	DeleteGO(time);
 	//星削除
 	for (auto star : FindGOs<Star>("star"))
 	{
@@ -75,13 +77,22 @@ Game::~Game()
 
 void Game::Update()
 {
-	player->starCount;
+	//if (time != nullptr)
+	//{
+		if (time->LimitTime <= 0.0f)
+		{
+			NewGO<GameClear>(0, "gameClear");
+			DeleteGO(this);
+		}
+	//}
+
+	/*player->starCount;
 	if (player->starCount >= 6)
 	{
 		NewGO<GameClear>(0, "gameClear");
 		DeleteGO(this);
 		player->starCount = 0;
-	}
+	}*/
 
 
 
