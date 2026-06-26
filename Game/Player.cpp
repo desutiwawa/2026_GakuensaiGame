@@ -96,6 +96,7 @@ void Player::Move()
 			{
 				isDashing = false;
 				DashSpeed = 1.0f;
+				
 			}
 		}
 	}
@@ -113,7 +114,7 @@ void Player::Move()
 
 
 	//地面に付いていたら。
-	if (characterController.IsOnGround())
+	if (characterController.IsOnGround() )
 	{
 		//重力を無くす。
 		moveSpeed.y = 0.0f;
@@ -122,7 +123,7 @@ void Player::Move()
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{
 			//ジャンプさせる。
-			moveSpeed.y = 240.0f;
+			moveSpeed.y = 300.0f;
 			jumpState = 0;
 		}
 	}
@@ -130,17 +131,23 @@ void Player::Move()
 	else
 	{
 		//重力を発生させる。
-		moveSpeed.y -= 2.5f;
+		moveSpeed.y -= 5.0f;
 		
 		//追加のジャンプ
 		if (jumpState == 0 and g_pad[0]->IsTrigger(enButtonA))
 		{
 			modelRender.PlayAnimation(enAnimationClip_Idle);
 			modelRender.PlayAnimation(enAnimationClip_Jump);
-			moveSpeed.y = 240.0f;
+			moveSpeed.y = 300.0f;
 			jumpState = 1;
 
 		}
+	}
+	//
+	if (isDashing == true)
+	{
+		moveSpeed.y = 0.0f;
+		moveSpeed.y -= 0.5f;
 	}
 
 	//キャラクターコントローラーを使って座標を移動させる。
@@ -216,12 +223,13 @@ void Player::PlayAnimation()
 	case 3:
 		//modelRender.Init("Assets/modelData/unityChan.tkm", animationClips, enAnimationClip_Num, enModelUpAxisY);
 		
+
+
 		rotation.AddRotationX(-89.4f);
-	
 		//rotation.AddRotationY(90.0f);
-	
 		modelRender.SetRotation(rotation);
-		//modelRender.PlayAnimation(enAnimationClip_Run);
+		
+		
 		break;
 	}
 }

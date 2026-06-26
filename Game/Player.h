@@ -36,8 +36,8 @@ public:
 	float DashRenge = 0.0f;
 	float DashSpeed = 1.0f;
 	
-	float MAX_Dash = 1.25f;//Dash倍率の最大値
-	float A_Dash = 0.01f;  // 1フレームごとのDash倍率加速度
+	float MAX_Dash = 1.15f;//Dash倍率の最大値
+	float A_Dash = 0.005f;  // 1フレームごとのDash倍率加速度
 	//Quaternion suraRot = { 0.0f,0.0f,90.0f };
 
 

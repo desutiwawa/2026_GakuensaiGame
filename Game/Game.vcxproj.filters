@@ -18,6 +18,7 @@
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -31,5 +32,6 @@
     <ClInclude Include="Star.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
 </Project>

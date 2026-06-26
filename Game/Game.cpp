@@ -5,6 +5,8 @@
 #include "BackGround.h"
 #include "sound/SoundEngine.h"
 #include "Star.h"
+#include "Time.h"
+#include "GameClear.h"
 
 Game::Game()
 {
@@ -38,6 +40,16 @@ Game::Game()
 	Star* star6 = NewGO<Star>(0, "star");
 	star6->position = { 3700.0f,150.0f,-400.0f };
 	star6->firstPosition = star6->position;
+
+
+
+
+	//UI
+	//Time
+	Time* time = NewGO<Time>(0, "time");
+
+
+
 }
 
 Game::~Game()
@@ -63,6 +75,16 @@ Game::~Game()
 
 void Game::Update()
 {
+	player->starCount;
+	if (player->starCount >= 6)
+	{
+		NewGO<GameClear>(0, "gameClear");
+		DeleteGO(this);
+		player->starCount = 0;
+	}
+
+
+
 	// g_renderingEngine->DisableRaytracing();
 	//m_modelRender.Update();
 }

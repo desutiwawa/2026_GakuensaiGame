@@ -7,6 +7,7 @@ BackGround::BackGround()
 	modelRender.Update();
 	physicsStaticObject.CreateFromModel(modelRender.GetModel(), modelRender.GetModel().GetWorldMatrix());
 
+	//PhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 }
 
 BackGround::~BackGround()

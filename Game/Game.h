@@ -7,6 +7,7 @@ class Player;
 class GameCamera;
 class BackGround;
 class Star;
+class Time;
 class Game : public IGameObject
 {
 public:
@@ -14,11 +15,14 @@ public:
 	~Game();
 	void Update();
 
+	SpriteRender spriteRender;
+	FontRender fontRender;
 	Player* player;
 	GameCamera* gameCamera;
 	BackGround* backGround;
 	SoundSource* gameBGM;
 	Star* star;
+	Time* time;
 	/*ModelRender m_modelRender;
 	Vector3 m_pos;*/
 };
